@@ -2,7 +2,7 @@
 //  MainScene.swift
 //  Go Nano
 //
-//  Created by Joshua Choi on 5/1/19.
+//  Created by Joshua Choi on 4/30/2019.
 //  Copyright © 2019 Nanogram LLC. All rights reserved.
 //
 
@@ -20,12 +20,34 @@ class GameScene: SKScene {
     
     // MARK: - Class Vars
     
+    // MARK: - GameViewController
+    var gameViewController: GameViewController?
+    
+    // MARK: - Sprites
     var backgroundNode: BackgroundNode!
     var scoreNode: ScoreNode!
     var playerNode: PlayerNode!
     var leftControlNode: ControlNode!
     var rightControlNode: ControlNode!
     var actionControlNode: ControlNode!
+    
+    // MARK: - HealthNode
+    var firstHealthNode: HealthNode!
+    var secondHealthNode: HealthNode!
+    var thirdHealthNode: HealthNode!
+    
+    /// Int value used to manipulate the player's health
+    fileprivate var healthScore: Int = 3 {
+        didSet {
+            if healthScore == 2 {
+                thirdHealthNode.isActive = false
+            } else if healthScore == 1 {
+                secondHealthNode.isActive = false
+            } else if healthScore == 0 {
+                firstHealthNode.isActive = false
+            }
+        }
+    }
     
     /// MARK: - Timer (used to auto-spawn enemies)
     var timer: Timer!
@@ -74,6 +96,26 @@ class GameScene: SKScene {
         scoreNode.fontColor = UIColor.white
         scoreNode.score = 0
         addChild(scoreNode)
+        
+        // MARK: - HealthNode
+        firstHealthNode = HealthNode()
+        firstHealthNode.position = scoreNode.position
+        firstHealthNode.position.x = 40
+        firstHealthNode.setScale(0.50)
+        addChild(firstHealthNode)
+        // MARK: - HealthNode
+        secondHealthNode = HealthNode()
+        secondHealthNode.position = firstHealthNode.position
+        secondHealthNode.position.x += 40
+        secondHealthNode.setScale(0.50)
+        addChild(secondHealthNode)
+        // MARK: - HealthNode
+        thirdHealthNode = HealthNode()
+        thirdHealthNode.position = secondHealthNode.position
+        thirdHealthNode.position.x += 40
+        thirdHealthNode.setScale(0.50)
+        addChild(thirdHealthNode)
+        
         
         // MARK: - ControlNode
         leftControlNode = ControlNode(.left, self)
@@ -195,11 +237,9 @@ class GameScene: SKScene {
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("FIRED HERE!")
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("FIRED THERE!")
     }
 }
 
@@ -208,16 +248,18 @@ class GameScene: SKScene {
 // MARK: - ControlNodeDelegate
 extension GameScene: ControlNodeDelegate {
     func tappedControl(_ control: ControlNode) {
-        print("FIRED!")
-        switch control.type {
-        case .left?:
-            moveLeft(self)
-        case .right?:
-            moveRight(self)
-        case .fire?:
-            fire(self)
-        default:
-            break;
+        if control.type == .left {
+            DispatchQueue.main.async {
+                self.moveLeft(self)
+            }
+        } else if control.type == .right {
+            DispatchQueue.main.async {
+                self.moveRight(self)
+            }
+        } else if control.type == .fire {
+            DispatchQueue.main.async {
+                self.fire(self)
+            }
         }
     }
 }
@@ -231,13 +273,27 @@ extension GameScene: SKPhysicsContactDelegate {
             return
         }
         
-        if contact.bodyA.node == playerNode || contact.bodyB.node == playerNode {
-            scoreNode.score -= 5
-            
+        if contact.bodyA.node == playerNode {
+            // Update the health
+            healthScore -= 1
+
             // Explosion
             let explosion = SKEmitterNode(fileNamed: "Explosion")!
             explosion.position = playerNode.position
             addChild(explosion)
+            
+            guard healthScore == 0 else {
+                return
+            }
+            
+            // Show the player that the game ended
+            let labelNode = SKLabelNode(fontNamed: "AvenirNext-Heavy")
+            labelNode.position = CGPoint(x: size.width/2, y: size.height/2)
+            labelNode.text = "GAME OVER: \(self.scoreNode.score)"
+            addChild(labelNode)
+            
+            // MARK: - GameViewController
+            self.gameViewController?.restartGame()
             
         } else if contact.bodyA.categoryBitMask == photonCategory || contact.bodyB.categoryBitMask == photonCategory {
             // Play the sound file

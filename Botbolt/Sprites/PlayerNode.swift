@@ -3,7 +3,7 @@
 //  PlayerNode.swift
 //  Botbolt
 //
-//  Created by Joshua Choi on 5/5/19.
+//  Created by Joshua Choi on 4/30/2019.
 //  Copyright © 2019 Nanogram LLC. All rights reserved.
 //
 
@@ -21,13 +21,13 @@ class PlayerNode: SKSpriteNode {
         self.init(imageNamed: "Bot")
         self.setScale(0.40)
 
-        // MARK: - SKEmitterNode
-        let fireNode = SKEmitterNode(fileNamed: "Fire")!
-        fireNode.setScale(0.5)
-        fireNode.position = self.position
-        fireNode.position.y = self.position.y
-        fireNode.run(SKAction.rotate(byAngle: CGFloat(Double.pi/4), duration: 0))
-        addChild(fireNode)
+//        // MARK: - SKEmitterNode
+//        let fireNode = SKEmitterNode(fileNamed: "Fire")!
+//        fireNode.setScale(0.5)
+//        fireNode.position = self.position
+//        fireNode.position.y = self.position.y
+//        fireNode.run(SKAction.rotate(byAngle: CGFloat(Double.pi/4), duration: 0))
+//        addChild(fireNode)
     }
 }
 

@@ -32,6 +32,7 @@
 		7E4A53D722801619009B4E6B /* spark.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7E4A53D622801619009B4E6B /* spark.wav */; };
 		7E4A53D922801629009B4E6B /* explosion.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7E4A53D822801629009B4E6B /* explosion.wav */; };
 		7E4A53DB22802261009B4E6B /* wand.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7E4A53DA22802261009B4E6B /* wand.wav */; };
+		7E8393102280E24400B3AC7F /* HealthNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E83930F2280E24400B3AC7F /* HealthNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		7E4A53D622801619009B4E6B /* spark.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spark.wav; sourceTree = "<group>"; };
 		7E4A53D822801629009B4E6B /* explosion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosion.wav; sourceTree = "<group>"; };
 		7E4A53DA22802261009B4E6B /* wand.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wand.wav; sourceTree = "<group>"; };
+		7E83930F2280E24400B3AC7F /* HealthNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +237,7 @@
 				7E4A53AA227FDE69009B4E6B /* PlayerNode.swift */,
 				7E4A53AD227FDF38009B4E6B /* BackgroundNode.swift */,
 				7E4A53C6227FEF1F009B4E6B /* ScoreNode.swift */,
+				7E83930F2280E24400B3AC7F /* HealthNode.swift */,
 			);
 			path = Sprites;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				7E4A53C7227FEF1F009B4E6B /* ScoreNode.swift in Sources */,
 				7E4A539A227FD92C009B4E6B /* InitialViewController.swift in Sources */,
 				7E4A53A5227FD949009B4E6B /* GameScene.swift in Sources */,
+				7E8393102280E24400B3AC7F /* HealthNode.swift in Sources */,
 				7E4A53BF227FE762009B4E6B /* GameViewController.swift in Sources */,
 				7E4A53AE227FDF38009B4E6B /* BackgroundNode.swift in Sources */,
 				7E4A5360227FD7EA009B4E6B /* AppDelegate.swift in Sources */,

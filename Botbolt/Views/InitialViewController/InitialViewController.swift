@@ -2,7 +2,7 @@
 //  InitialViewController.swift
 //  Saberbolt
 //
-//  Created by Joshua Choi on 5/5/19.
+//  Created by Joshua Choi on 4/30/2019.
 //  Copyright © 2019 Nanogram LLC. All rights reserved.
 //
 
@@ -14,6 +14,9 @@ import SpriteKit
  Abstract: Initial view controller class to display options
  */
 class InitialViewController: UIViewController {
+    
+    // MARK: - Class Vars
+    var label: UILabel!
 
     // MARK: - IBActions
     @IBOutlet weak var playButton: UIButton!
@@ -26,6 +29,17 @@ class InitialViewController: UIViewController {
     // MARK: - View Controller Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // label
+        label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100))
+        label.center = view.center
+        label.center.y -= 100
+        label.textAlignment = .center
+        label.font = UIFont.heavy(size: 40)
+        label.textColor = .white
+        label.text = "BOLTBOT"
+        label.layer.applyShadow()
+        view.addSubview(label)
         
         // playButton
         playButton.setButtonTitle(titleAttributes: NSAttributedString(string: "PLAY", attributes: [.foregroundColor: UIColor.white, .font: UIFont.heavy(size: 21)]), borderColor: .clear, backgroundColor: UIColor.babyBlue, borderWidth: 0, cornerRadii: 20)
