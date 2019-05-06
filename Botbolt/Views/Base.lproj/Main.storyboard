@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Initial View Controller-->
+        <scene sceneID="tXr-a1-R10">
+            <objects>
+                <viewController id="BV1-FR-VrT" customClass="InitialViewController" customModule="Botbolt" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clouds" translatesAutoresizingMaskIntoConstraints="NO" id="Ryc-vF-W87">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ARu-lp-5k6">
+                                <rect key="frame" x="112.5" y="561" width="150" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Gg5-jI-zqJ"/>
+                                    <constraint firstAttribute="width" constant="150" id="t3D-nu-iCs"/>
+                                </constraints>
+                                <state key="normal" title="PLAY"/>
+                                <connections>
+                                    <action selector="playButton:" destination="BV1-FR-VrT" eventType="touchUpInside" id="E4j-nf-sU4"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="Ryc-vF-W87" secondAttribute="bottom" id="R5c-kD-muk"/>
+                            <constraint firstItem="Ryc-vF-W87" firstAttribute="top" secondItem="3se-qz-xqx" secondAttribute="top" id="RmZ-DQ-AY6"/>
+                            <constraint firstItem="ARu-lp-5k6" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="bLb-EN-NfF"/>
+                            <constraint firstItem="4qk-I5-YsI" firstAttribute="bottom" secondItem="ARu-lp-5k6" secondAttribute="bottom" constant="22" id="jGU-vI-EIX"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ARu-lp-5k6" secondAttribute="bottom" priority="999" constant="56" id="lna-5W-rJs"/>
+                            <constraint firstItem="Ryc-vF-W87" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leading" id="u6m-P1-PPY"/>
+                            <constraint firstAttribute="trailing" secondItem="Ryc-vF-W87" secondAttribute="trailing" id="yAJ-Dj-gUf"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="375" height="667"/>
+                    <connections>
+                        <outlet property="playButton" destination="ARu-lp-5k6" id="xUc-mR-5Yc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="115.21739130434783" y="101.45089285714285"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="clouds" width="272" height="118"/>
+    </resources>
+</document>
