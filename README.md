@@ -1,11 +1,15 @@
 # Botbolt
 ## Authored by Joshua M. Choi
-Botbolt is an interactive 2d game for the iPhone and iPad. It is written in Swift using Apple's SpriteKit and SceneKit SDK. This project was made for _Intro To Video Game Design_ with Professor Lawrence Wolk — a wonderful professor whom I've had the privillege of being a student. 
+Botbolt is an interactive 2d game for the iPhone and iPad. It is written in Swift using Apple's SpriteKit and SceneKit SDK. This project was made for _Intro To Video Game Design_ with Professor Lawrence Wolk — a wonderful professor whom I've had the privillege of being a student.
 
 ![uh oh.](Botbolt.png)
 
 ## Video Demo
-[The link to the video demo is here.](https://github.com/HackShitUp/Botbolt/demo.mp4)
+[The link to the video demo is here.](https://youtu.be/qTTBWPSm1Wk)
+
+## Screenshots
+![Screenshot No. 1.](1.PNG)
+![Screenshot No. 2.](2.PNG)
 
 ## Narrative & Objective
 The objective of the game is simple — destroy as many enemies (gremlin) that fall from the sky before the game ends. The game lasts for approximately 4 minutes, playing to the tune of [Bob Dylan's Like a Rolling Stone](https://www.youtube.com/watch?v=0fQjhSGQg4o). Using the nostalgic NES controls you can use the left, right, and action control buttons at the bottom of the screen. Every game has 3 lives. You lose a life if hit by a gremlin. There are no other chances to obtain more lives (high-score game). The number of gremlines that fall from the sky will increasingly get faster as the time passes or your score. This is calculated via a time interval variable that determines whether the current modolus of the score is equal to 0. If so, then the speed of time interval (which starts at 1) increases by 0.75s.
@@ -72,6 +76,9 @@ git clone https://www.github.com/HackShitUp/Botbolt.git
 2. Unzip the file.
 3. Navigate to the root directory and open *Botbolt.xcodeproj*.
 4. Build and run by clicking the play button at the top left corner, or simply execute with _CMD + R_.
+
+## Acknowledgements
+I was inspired to use the Boost Buddies iOS app game for the main character inspiration. As a matter of fact, I used their character from their iMessage sticker pack.
 
 
 Copyright (C) 2017 Nanogram, LLC. All rights reserved.
