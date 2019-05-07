@@ -2,7 +2,10 @@
 ## Authored by Joshua M. Choi
 Botbolt is an interactive 2d game for the iPhone and iPad. It is written in Swift using Apple's SpriteKit and SceneKit SDK. This project was made for _Intro To Video Game Design_ with Professor Lawrence Wolk — a wonderful professor whom I've had the privillege of being a student. 
 
-![uh oh.](https://www.github.com/HackShitUp/Botbolt.git/Botbolt.png)
+![uh oh.](Botbolt.png)
+
+## Video Demo
+[The link to the video demo is here.](https://github.com/HackShitUp/Botbolt/demo.mp4)
 
 ## Narrative & Objective
 The objective of the game is simple — destroy as many enemies (gremlin) that fall from the sky before the game ends. The game lasts for approximately 4 minutes, playing to the tune of [Bob Dylan's Like a Rolling Stone](https://www.youtube.com/watch?v=0fQjhSGQg4o). Using the nostalgic NES controls you can use the left, right, and action control buttons at the bottom of the screen. Every game has 3 lives. You lose a life if hit by a gremlin. There are no other chances to obtain more lives (high-score game). The number of gremlines that fall from the sky will increasingly get faster as the time passes or your score. This is calculated via a time interval variable that determines whether the current modolus of the score is equal to 0. If so, then the speed of time interval (which starts at 1) increases by 0.75s.
