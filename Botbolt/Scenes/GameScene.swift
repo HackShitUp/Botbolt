@@ -51,6 +51,7 @@ class GameScene: SKScene {
     
     /// MARK: - Timer (used to auto-spawn enemies)
     var timer: Timer!
+    var timeInterval: TimeInterval = 1;
     
     // MARK: - UInt32
     let enemyCategory: UInt32 = 0x1 << 1
@@ -72,7 +73,7 @@ class GameScene: SKScene {
         run(SKAction.playSoundFileNamed("rollingstone8bit", waitForCompletion: false))
         
         // MARK: - Timer
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(spawnEnemies(_:)), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: self.timeInterval, target: self, selector: #selector(spawnEnemies(_:)), userInfo: nil, repeats: true)
         
         // Self
         // Set the background color
@@ -101,36 +102,39 @@ class GameScene: SKScene {
         firstHealthNode = HealthNode()
         firstHealthNode.position = scoreNode.position
         firstHealthNode.position.x = 40
-        firstHealthNode.setScale(0.50)
+        firstHealthNode.setScale(0.10)
         addChild(firstHealthNode)
         // MARK: - HealthNode
         secondHealthNode = HealthNode()
         secondHealthNode.position = firstHealthNode.position
         secondHealthNode.position.x += 40
-        secondHealthNode.setScale(0.50)
+        secondHealthNode.setScale(0.10)
         addChild(secondHealthNode)
         // MARK: - HealthNode
         thirdHealthNode = HealthNode()
         thirdHealthNode.position = secondHealthNode.position
         thirdHealthNode.position.x += 40
-        thirdHealthNode.setScale(0.50)
+        thirdHealthNode.setScale(0.10)
         addChild(thirdHealthNode)
         
         
         // MARK: - ControlNode
         leftControlNode = ControlNode(.left, self)
+        leftControlNode.zPosition = 1
         leftControlNode.setScale(0.20)
         leftControlNode.position = CGPoint(x: leftControlNode.size.width, y: 60)
         addChild(leftControlNode)
         
         // MARK: - ControlNode
         rightControlNode = ControlNode(.right, self)
+        rightControlNode.zPosition = 1
         rightControlNode.setScale(0.20)
         rightControlNode.position = CGPoint(x: leftControlNode.position.x * 2 + 40, y: 60)
         addChild(rightControlNode)
         
         // MARK: - ControlNode
         actionControlNode = ControlNode(.fire, self)
+        actionControlNode.zPosition = 1
         actionControlNode.setScale(0.20)
         actionControlNode.position = CGPoint(x: size.width - actionControlNode.size.width, y: 60)
         addChild(actionControlNode)
@@ -160,8 +164,8 @@ class GameScene: SKScene {
     @objc func spawnEnemies(_ sender: Any) {
         // Setup the fireballs
         // MARK: - SKSpriteNode
-        let enemyNode = SKSpriteNode(imageNamed: "Sea")
-        enemyNode.setScale(0.4)
+        let enemyNode = SKSpriteNode(imageNamed: "Enemy")
+        enemyNode.setScale(0.25)
         enemyNode.physicsBody = SKPhysicsBody(rectangleOf: enemyNode.size)
         enemyNode.physicsBody?.isDynamic = true
         enemyNode.physicsBody?.categoryBitMask = enemyCategory
@@ -185,7 +189,7 @@ class GameScene: SKScene {
     /// Move the main character to the left
     /// - Parameter sender: Any object that calls this method
     @objc fileprivate func moveLeft(_ sender: Any) {
-        if playerNode.position.x >= 8 + playerNode.size.width {
+        if playerNode.position.x >= 16 {
             playerNode.run(SKAction.moveTo(x: CGFloat(playerNode.position.x - 16), duration: 0.1))
         }
     }
@@ -193,7 +197,7 @@ class GameScene: SKScene {
     /// Move the main character to the right
     /// - Parameter sender: Any object that calls this method
     @objc fileprivate func moveRight(_ sender: Any) {
-        if playerNode.position.x <= size.width - 8 - playerNode.size.width {
+        if playerNode.position.x <= size.width - 16 {
             playerNode.run(SKAction.moveTo(x: CGFloat(playerNode.position.x + 16), duration: 0.1))
         }
     }
@@ -235,11 +239,13 @@ class GameScene: SKScene {
         sparkEmitterNode.run(attackActionSequence)
     }
     
-    
+    // MARK: - UITouch
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("Touches began...")
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("Touches moved...")
     }
 }
 
@@ -276,24 +282,33 @@ extension GameScene: SKPhysicsContactDelegate {
         if contact.bodyA.node == playerNode {
             // Update the health
             healthScore -= 1
+            
+            // Play the sound file
+            run(SKAction.playSoundFileNamed("explosion", waitForCompletion: false))
 
             // Explosion
             let explosion = SKEmitterNode(fileNamed: "Explosion")!
             explosion.position = playerNode.position
             addChild(explosion)
+            self.run(SKAction.wait(forDuration: 1)) {
+                explosion.removeFromParent()
+            }
             
             guard healthScore == 0 else {
                 return
             }
             
-            // Show the player that the game ended
-            let labelNode = SKLabelNode(fontNamed: "AvenirNext-Heavy")
-            labelNode.position = CGPoint(x: size.width/2, y: size.height/2)
-            labelNode.text = "GAME OVER: \(self.scoreNode.score)"
-            addChild(labelNode)
-            
-            // MARK: - GameViewController
-            self.gameViewController?.restartGame()
+            self.run(SKAction.wait(forDuration: 8)) {
+                // Show the player that the game ended
+                let labelNode = SKLabelNode(fontNamed: "AvenirNext-Heavy")
+                labelNode.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+                labelNode.text = "GAME OVER: \(self.scoreNode.score)"
+                self.addChild(labelNode)
+                
+                // MARK: - GameViewController
+                // Restart the game
+                self.gameViewController?.restartGame()
+            }
             
         } else if contact.bodyA.categoryBitMask == photonCategory || contact.bodyB.categoryBitMask == photonCategory {
             // Play the sound file
@@ -312,6 +327,19 @@ extension GameScene: SKPhysicsContactDelegate {
             
             // MARK: - ScoreNode
             scoreNode.score += 5
+            
+            if (scoreNode.score%100 == 0) {
+                // Invalidate the timer and make it increasingly harder
+                self.timer.invalidate()
+                self.timer = nil
+                
+                // Update the time interval
+                self.timeInterval *= 0.75;
+                
+                // MARK: - Timer
+                // Reinitialize the timer with a new value
+                self.timer = Timer.scheduledTimer(timeInterval: self.timeInterval, target: self, selector: #selector(spawnEnemies(_:)), userInfo: nil, repeats: true)
+            }
         }
     }
     
